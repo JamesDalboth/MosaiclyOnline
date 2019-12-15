@@ -104,5 +104,7 @@ dist
 .tern-port
 
 # Zip Folders
-
 *.zip
+
+# Lock files
+package-lock.json
