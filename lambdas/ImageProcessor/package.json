@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/JamesDalboth/MosaiclyOnline/issues"
   },
-  "homepage": "https://github.com/JamesDalboth/MosaiclyOnline#readme"
+  "homepage": "https://github.com/JamesDalboth/MosaiclyOnline#readme",
+  "dependencies": {
+    "base64-img": "^1.0.4"
+  }
 }
