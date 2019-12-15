@@ -1,0 +1,19 @@
+{
+  "name": "searchscrapper",
+  "version": "1.0.0",
+  "description": "Scrapes google image search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesDalboth/Mosaicly.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JamesDalboth/Mosaicly/issues"
+  },
+  "homepage": "https://github.com/JamesDalboth/Mosaicly#readme"
+}
