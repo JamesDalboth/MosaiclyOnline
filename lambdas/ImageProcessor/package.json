@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/JamesDalboth/MosaiclyOnline#readme",
   "dependencies": {
+    "aws-sdk": "^2.590.0",
     "base64-img": "^1.0.4",
     "jimp": "^0.9.3"
   }
