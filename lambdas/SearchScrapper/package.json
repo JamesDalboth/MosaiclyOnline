@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/JamesDalboth/Mosaicly/issues"
   },
-  "homepage": "https://github.com/JamesDalboth/Mosaicly#readme"
+  "homepage": "https://github.com/JamesDalboth/Mosaicly#readme",
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
+  }
 }
