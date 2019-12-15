@@ -24,7 +24,7 @@ exports.handler = (event, context, callback) => {
   }
 
   Promise.all(COLOURS.map((color) => getImages(searchTerm, color)))
-    .then((imageMap) => callback(null, buildResponse(200, imageMap)))
+    .then((imageMap) => callback(null, imageMap))
     .catch((err) => {
       callback(err);
     });
@@ -64,11 +64,4 @@ const buildEndpoint = async (searchTerm, color) => {
     searchTerm +
     '&tbm=isch&ijn=0&tbs=ic:specific,isc:' +
     color;
-};
-
-const buildResponse = (statusCode, body) => {
-  return {
-    statusCode: statusCode,
-    body: JSON.stringify(body)
-  };
 };
