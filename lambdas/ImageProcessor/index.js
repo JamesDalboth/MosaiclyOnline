@@ -88,7 +88,7 @@ const invokeSearchScrapper = async (searchTerm, tileSize) => {
 
 const uploadS3 = async (data) => {
   const buf = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),'base64')
-  const filename = 'example.png';
+  const filename = (Math.random() * 10000000) + '.png';
   return s3.putObject({
     Body: buf,
     Key: filename,
