@@ -62,6 +62,7 @@ const parseResponse = (response) => {
 const buildEndpoint = async (searchTerm, color) => {
   return 'https://serpapi.com/search?q=' +
     searchTerm +
-    '&tbm=isch&ijn=0&tbs=ic:specific,isc:' +
-    color;
+    '&tbm=isch&ijn=0&tbs=isz:m,ic:specific,isc:' +
+    color +
+    ',iar:s,ift:png';
 };
