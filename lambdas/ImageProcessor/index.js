@@ -1,6 +1,7 @@
 const Jimp = require('jimp');
 const AWS = require('aws-sdk');
 
+const s3 = new AWS.S3();
 const lambda = new AWS.Lambda({
   region: 'us-east-1'
 });
@@ -24,7 +25,8 @@ exports.handler = (event, context, callback) => {
     .then(() => invokeSearchScrapper(details.searchTerm, details.tileSize))
     .then((mapping) => processImage(details.image, details.tileSize, mapping))
     .then((processedImage) => encodeImage(processedImage))
-    .then((base64) => callback(null, base64))
+    .then((base64) => uploadS3(base64))
+    .then((url) => callback(null, url))
     .catch((err) => callback(err));
 };
 
@@ -60,10 +62,6 @@ const processSection = async (image, newImage, x, y, tileSize, mapping) => {
 
   const closestColour = getClosestColour(average);
 
-  console.log(closestColour);
-  console.log(mapping);
-  console.log(mapping[closestColour]);
-
   const closestImg = mapping[closestColour][0];
 
   newImage.composite(closestImg, x * tileSize, y * tileSize);
@@ -88,8 +86,22 @@ const invokeSearchScrapper = async (searchTerm, tileSize) => {
     .then(reformatMapping);
 };
 
+const uploadS3 = async (data) => {
+  const buf = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),'base64')
+  const filename = 'example.png';
+  return s3.putObject({
+    Body: buf,
+    Key: filename,
+    ContentEncoding: 'base64',
+    Bucket: 'mosaicly',
+    ContentType: 'image/png',
+    ACL:'public-read'
+  }).promise()
+  .then(() => 'https://mosaicly.s3.amazonaws.com/' + filename);
+};
+
 const encodeImage = (image) => {
-  return image.getBase64Async(Jimp.AUTO);
+  return image.getBase64Async(Jimp.MIME_PNG);
 };
 
 const getClosestColour = (base) => {
