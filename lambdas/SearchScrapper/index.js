@@ -50,6 +50,7 @@ const query = async (endpoint) => {
     }
   };
 
+  sleep(333);
   console.log('Querying ' + JSON.stringify(options));
   return request(options);
 };
@@ -69,4 +70,8 @@ const parseResponse = (response) => {
 const buildEndpoint = async (searchTerm, color) => {
   return 'https://mosaicly.cognitiveservices.azure.com/bing/v7.0/images/search?&q=' +
     searchTerm + '&color=' + color
+};
+
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
 };
