@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/MosaiclyOnline/static/css/main.d1b05096.chunk.css",
+    "main.js": "/MosaiclyOnline/static/js/main.6c6c2786.chunk.js",
+    "main.js.map": "/MosaiclyOnline/static/js/main.6c6c2786.chunk.js.map",
+    "runtime-main.js": "/MosaiclyOnline/static/js/runtime-main.df034b8b.js",
+    "runtime-main.js.map": "/MosaiclyOnline/static/js/runtime-main.df034b8b.js.map",
+    "static/js/2.c316ce37.chunk.js": "/MosaiclyOnline/static/js/2.c316ce37.chunk.js",
+    "static/js/2.c316ce37.chunk.js.map": "/MosaiclyOnline/static/js/2.c316ce37.chunk.js.map",
+    "index.html": "/MosaiclyOnline/index.html",
+    "precache-manifest.0cee00a0dabb45da6f04b3ed47741744.js": "/MosaiclyOnline/precache-manifest.0cee00a0dabb45da6f04b3ed47741744.js",
+    "service-worker.js": "/MosaiclyOnline/service-worker.js",
+    "static/css/main.d1b05096.chunk.css.map": "/MosaiclyOnline/static/css/main.d1b05096.chunk.css.map",
+    "static/js/2.c316ce37.chunk.js.LICENSE": "/MosaiclyOnline/static/js/2.c316ce37.chunk.js.LICENSE",
+    "static/media/logo.svg": "/MosaiclyOnline/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.df034b8b.js",
+    "static/js/2.c316ce37.chunk.js",
+    "static/css/main.d1b05096.chunk.css",
+    "static/js/main.6c6c2786.chunk.js"
+  ]
+}
