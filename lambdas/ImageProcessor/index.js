@@ -5,99 +5,23 @@ const lambda = new AWS.Lambda({
   region: 'us-east-1'
 });
 
-const COLOURS = [
-  {
-    r: 200,
-    g: 0,
-    b: 0,
-    name: 'red'
-  },
-  {
-    r: 255,
-    g: 190,
-    b: -3,
-    name: 'orange'
-  },
-  {
-    r: 255,
-    g: 255,
-    b: -3,
-    name: 'yellow'
-  },
-  {
-    r: 0,
-    g: 200,
-    b: 0,
-    name: 'green'
-  },
-  {
-    r: -1,
-    g: 255,
-    b: 255,
-    name: 'teal'
-  },
-  {
-    r: 0,
-    g: 0,
-    b: 200,
-    name: 'blue'
-  },
-  {
-    r: 100,
-    g: -2,
-    b: 200,
-    name: 'purple'
-  },
-  {
-    r: 255,
-    g: -2,
-    b: 255,
-    name: 'pink'
-  },
-  {
-    r: 255,
-    g: 255,
-    b: 255,
-    name: 'white'
-  },
-  {
-    r: 126,
-    g: 126,
-    b: 126,
-    name: 'grey'
-  },
-  {
-    r: 204,
-    g: 204,
-    b: 0,
-    name: 'brown'
-  },
-  {
-    r: 0,
-    g: 0,
-    b: 0,
-    name: 'black'
-  }
-];
-
 exports.handler = (event, context, callback) => {
   const details = {
     imageUrl: event.imageUrl,
     searchTerm: event.searchTerm,
-    tileSize: 10
+    tileSize: event.tileSize
   };
 
-  if (!details.imageUrl || !details.searchTerm) {
-    callback('Missing event details');
+  if (!details.imageUrl || !details.searchTerm || !details.tileSize) {
+    callback('Missing event details (imageUrl, searchTerm, tileSize)');
     return;
   }
-
 
   Jimp.read(details.imageUrl)
     .then((image) => {
       details.image = image;
     })
-    .then(() => invokeSearchScrapper(details.searchTerm))
+    .then(() => invokeSearchScrapper(details.searchTerm, details.tileSize))
     .then((mapping) => processImage(details.image, details.tileSize, mapping))
     .then((processedImage) => encodeImage(processedImage))
     .then((base64) => callback(null, base64))
@@ -134,22 +58,33 @@ const processSection = async (image, newImage, x, y, tileSize, mapping) => {
     b: image.bitmap.data[i + 2]
   };
 
-  console.log("(r, g, b): " + average.r + ", " + average.g + ", " + average.b);
   const closestColour = getClosestColour(average);
+
   console.log(closestColour);
+  console.log(mapping);
+  console.log(mapping[closestColour]);
 
-  let col;
-  for (let colour of COLOURS) {
-    if (colour.name == closestColour) {
-      col = colour;
-    }
-  }
+  const closestImg = mapping[closestColour][0];
 
-  newImage.scan(x * tileSize, y * tileSize, tileSize, tileSize, (px, py, i) => {
-    newImage.bitmap.data[i + 0] = getColourVal(average, col.r);
-    newImage.bitmap.data[i + 1] = getColourVal(average, col.g);
-    newImage.bitmap.data[i + 2] = getColourVal(average, col.b);
-  });
+  newImage.composite(closestImg, x * tileSize, y * tileSize);
+};
+
+const invokeSearchScrapper = async (searchTerm, tileSize) => {
+  return lambda.invoke({
+    FunctionName: 'Mosaicly_SearchScrapper',
+    InvocationType: 'RequestResponse',
+    Payload: JSON.stringify({
+      searchTerm: searchTerm
+    })
+  })
+    .promise()
+    .then((response) => JSON.parse(response.Payload))
+    .then((mapping) => Promise.all(mapping.map((colour) => colourObjUrlReplacement(colour, tileSize))))
+    .then(reformatMapping);
+};
+
+const encodeImage = (image) => {
+  return image.getBase64Async(Jimp.AUTO);
 };
 
 const getClosestColour = (base) => {
@@ -222,46 +157,34 @@ const getClosestColour = (base) => {
   }
 };
 
-const getColourVal = (base, val) => {
-  if (val == -1) {
-    return base.r;
-  }
-
-  if (val == -2) {
-    return base.g;
-  }
-
-  if (val == -3) {
-    return base.b;
-  }
-
-  return val;
-};
-
-const invokeSearchScrapper = async (searchTerm) => {
-  // return lambda.invoke({
-  //   FunctionName: 'Mosaicly_SearchScrapper',
-  //   InvocationType: 'RequestResponse',
-  //   Payload: JSON.stringify({
-  //     searchTerm: searchTerm
-  //   })
-  // }).promise();
-  return {};
-};
-
-const decodeBase64 = async (base64) => {
-  return new Promise((resolve) => {
-    console.log(base64);
-    Base64Img.img(base64, '', 'decoded', (err, filepath) => {
-      if (err) {
-        throw err;
-      }
-
-      resolve(filepath);
+const newImage = async (url, size) => {
+  console.log("New Image: " + url);
+  return Jimp.read(url)
+    .then((image) => image.resize(size, size))
+    .then((image) => image.opaque())
+    .catch((err) => {
+      console.log("Error loading new image " + url + " : " + err);
+      return null;
     });
-  });
 };
 
-const encodeImage = (image) => {
-  return image.getBase64Async(Jimp.AUTO);
+const colourObjUrlReplacement = async (colour, size) => {
+  return Promise.all(colour.data.map((url) => newImage(url, size)))
+    .then((data) => data.filter((x) => x != null))
+    .then((data) => {
+      return {
+        colour: colour.color,
+        data: data
+      };
+    });
+};
+
+const reformatMapping = async (mapping) => {
+  const newMapping = {};
+
+  for (let entry of mapping) {
+    newMapping[entry.colour] = entry.data;
+  }
+
+  return newMapping;
 };
