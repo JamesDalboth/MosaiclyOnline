@@ -10,7 +10,7 @@ const COLOURS = [
   'purple',
   'pink',
   'white',
-  'grey',
+  'gray',
   'black',
   'brown',
 ];
@@ -43,26 +43,30 @@ const getImages = async (searchTerm, color) => {
 };
 
 const query = async (endpoint) => {
-  console.log('Querying ' + endpoint);
-  return request(endpoint);
+  const options = {
+    url: endpoint,
+    headers: {
+      'Ocp-Apim-Subscription-Key': process.env.BING_API_KEY
+    }
+  };
+
+  console.log('Querying ' + JSON.stringify(options));
+  return request(options);
 };
 
 const parseResponse = (response) => {
   console.log('Parsing response: ' + response);
   const data = [];
-  const imageResults = JSON.parse(response).images_results;
+  const imageResults = JSON.parse(response).value;
 
-  data.push(imageResults[0].original);
-  data.push(imageResults[1].original);
-  data.push(imageResults[2].original);
+  data.push(imageResults[0].contentUrl);
+  data.push(imageResults[1].contentUrl);
+  data.push(imageResults[2].contentUrl);
 
   return data;
 };
 
 const buildEndpoint = async (searchTerm, color) => {
-  return 'https://serpapi.com/search?q=' +
-    searchTerm +
-    '&tbm=isch&ijn=0&tbs=isz:m,ic:specific,isc:' +
-    color +
-    ',iar:s,ift:png';
+  return 'https://mosaicly.cognitiveservices.azure.com/bing/v7.0/images/search?&q=' +
+    searchTerm + '&color=' + color
 };

@@ -78,6 +78,11 @@ const invokeSearchScrapper = async (searchTerm, tileSize) => {
     })
   })
     .promise()
+    .then((data) => {
+      console.log("Response from Mosaicly_SearchScrapper:");
+      console.log(data);
+      return data;
+    })
     .then((response) => JSON.parse(response.Payload))
     .then((mapping) => Promise.all(mapping.map((colour) => colourObjUrlReplacement(colour, tileSize))))
     .then(reformatMapping);
@@ -105,12 +110,12 @@ const getClosestColour = (base) => {
       if (maxInt < 70) {
         return 'black';
       }
-      return 'grey';
+      return 'gray';
     } else {
       if (maxInt > 185) {
         return 'white';
       }
-      return 'grey';
+      return 'gray';
     }
   } else {
     if (maxDouble == r) {
