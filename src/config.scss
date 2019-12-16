@@ -1,0 +1,23 @@
+$light-blue: #afcbff;
+$dark-blue: #26408b;
+$red: #9b1d20;
+$white: #fdfdff;
+$black: #1b1b1e;
+
+$body-bg: $white;
+$body-color: $black;
+
+$theme-colors: (
+  "primary": $dark-blue,
+  "secondary": $light-blue,
+  "light": $white,
+  "dark": $black,
+  "accent": $red,
+);
+
+$font-family-sans-serif: 'Oswald', sans-serif;
+$enable-shadows: true;
+
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
