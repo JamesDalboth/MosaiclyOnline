@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 
 import ImageObj from './Image';
 
-const ImageDisplay: React.FC<{ url1?: string, url2?: string, loading: boolean}> = ({ url1, url2, loading }) => {
+const ImageDisplay: React.FC<{ url1?: string; url2?: string; loading: boolean}> = ({ url1, url2, loading }) => {
   return (
     <>
       <Col>

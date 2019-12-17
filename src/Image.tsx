@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Image } from 'react-bootstrap';
 
-const ImageObj: React.FC<{ url?: string, loading?: boolean }> = ({ url, loading }) => {
+const ImageObj: React.FC<{ url?: string; loading?: boolean }> = ({ url, loading }) => {
   const loadingGif = 'https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif';
 
   if (loading) {
