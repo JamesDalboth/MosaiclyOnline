@@ -36,6 +36,7 @@ const Main: React.FC = () => {
 
   const onSubmit = (): void => {
     setLoading(true);
+    setResult(undefined);
 
     request({
       method: 'POST',
