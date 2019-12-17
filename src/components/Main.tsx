@@ -52,11 +52,13 @@ const Main: React.FC = () => {
       json: true,
     })
       .then((url: string) => {
-        console.log(url);
         setResult(url);
         setLoading(false);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   const onChange = (event: InputChangeEvent): void => {
