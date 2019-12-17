@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 
 import ImageDisplay from './ImageDisplay';
+import InputForm from './InputForm';
+import Footer from './Footer';
 
 // eslint-disable-next-line
 const request = require('request-promise');
@@ -70,53 +72,23 @@ const Main: React.FC = () => {
 
   return (
     <Container>
-      <Col xs={{ span: 8, offset: 2 }}>
-        <Row>
-          <Col>
-            <h1>Mosaicly Online</h1>
-          </Col>
-        </Row>
-        <Row>
-          <ImageDisplay url1={imageUrl} url2={result} loading={loading}/>
-        </Row>
-        <Row>
-          <Form>
-            <Form.Group controlId="imageUrl">
-              <Form.Label>Image Url</Form.Label>
-              <Form.Control
-                placeholder="Enter image url"
-                type="text"
-                onChange={onChange}
-                required/>
-            </Form.Group>
-
-            <Form.Group controlId="searchTerm">
-              <Form.Label>Search Term</Form.Label>
-              <Form.Control
-                placeholder="Search Term"
-                type="text"
-                onChange={onChange}
-                required/>
-            </Form.Group>
-
-            <Form.Group controlId="tileSize">
-              <Form.Label>Tile Size (px)</Form.Label>
-              <Form.Control
-                placeholder="5"
-                type="text"
-                onChange={onChange}
-                required/>
-            </Form.Group>
-
-            <Button variant="primary" onClick={onSubmit}>
-              Submit
-            </Button>
-          </Form>
-        </Row>
-        <Row>
-          Original built by James Dalboth, Matthew Ho, Rohit Prasad and Harry Black
-        </Row>
-      </Col>
+      <Row>
+        <Col>
+          <h1 className="text-center">Mosaicly Online</h1>
+          <hr/>
+        </Col>
+      </Row>
+      <Row>
+        <ImageDisplay url1={imageUrl} url2={result} loading={loading}/>
+      </Row>
+      <Row>
+        <Col xs={{ span: 8, offset: 2 }}>
+          <InputForm onChange={onChange} onSubmit={onSubmit}/>
+        </Col>
+      </Row>
+      <Row>
+        <Footer/>
+      </Row>
     </Container>
   );
 };

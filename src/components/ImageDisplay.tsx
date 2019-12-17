@@ -2,7 +2,7 @@ import React from 'react';
 
 import Col from 'react-bootstrap/Col';
 
-import ImageObj from './Image';
+import ImageObj from './ImageObj';
 
 const ImageDisplay: React.FC<{ url1?: string; url2?: string; loading: boolean}> = ({ url1, url2, loading }) => {
   return (
