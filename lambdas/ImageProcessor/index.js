@@ -8,17 +8,18 @@ const lambda = new AWS.Lambda({
 
 exports.handler = (event, context, callback) => {
   const details = {
-    imageUrl: event.imageUrl,
+    data: event.data,
     searchTerm: event.searchTerm,
     tileSize: event.tileSize
   };
 
-  if (!details.imageUrl || !details.searchTerm || !details.tileSize) {
-    callback('Missing event details (imageUrl, searchTerm, tileSize)');
+  if (!details.data || !details.searchTerm || !details.tileSize) {
+    callback('Missing event details (data, searchTerm, tileSize)');
     return;
   }
 
-  Jimp.read(details.imageUrl)
+  uploadS3(details.data)
+    .then((url) => Jimp.read(url))
     .then((image) => {
       details.image = image;
     })
@@ -87,7 +88,7 @@ const invokeSearchScrapper = async (searchTerm, tileSize) => {
 };
 
 const uploadS3 = async (data) => {
-  const buf = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),'base64')
+  const buf = Buffer.from(data.replace(/^data:image\/\w+;base64,/, ""),'base64');
   const filename = (Math.random() * 10000000) + '.png';
   return s3.putObject({
     Body: buf,
