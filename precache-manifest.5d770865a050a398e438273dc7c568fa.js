@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0e1169cb52f41d7800814a226f9b170b",
+    "revision": "d6bdf75ba67c4b9107a1ea7abccfa17c",
     "url": "/MosaiclyOnline/index.html"
   },
   {
-    "revision": "0897a32db81239940e0a",
+    "revision": "b168da1acf4fc1f2ea9d",
     "url": "/MosaiclyOnline/static/css/main.b69c9bc1.chunk.css"
   },
   {
-    "revision": "e30b9681203ca6792dd4",
-    "url": "/MosaiclyOnline/static/js/2.de5bb73c.chunk.js"
+    "revision": "0fdf39a4978e243c928b",
+    "url": "/MosaiclyOnline/static/js/2.70098646.chunk.js"
   },
   {
     "revision": "17ccc91fd80ea8924c02520752431782",
-    "url": "/MosaiclyOnline/static/js/2.de5bb73c.chunk.js.LICENSE"
+    "url": "/MosaiclyOnline/static/js/2.70098646.chunk.js.LICENSE"
   },
   {
-    "revision": "0897a32db81239940e0a",
-    "url": "/MosaiclyOnline/static/js/main.e22d811d.chunk.js"
+    "revision": "b168da1acf4fc1f2ea9d",
+    "url": "/MosaiclyOnline/static/js/main.adfd899a.chunk.js"
   },
   {
     "revision": "43964c284236d43a1411",
