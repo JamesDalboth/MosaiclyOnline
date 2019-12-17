@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+
+import ImageDisplay from './ImageDisplay';
 
 // eslint-disable-next-line
 const request = require('request-promise');
@@ -30,8 +32,12 @@ const Main: React.FC = () => {
 
   const [imageUrl, setImageUrl] = React.useState<string>();
   const [result, setResult] = React.useState<string>();
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const onSubmit = (): void => {
+    setLoading(true);
+    setImageUrl(fields.imageUrl);
+
     request({
       method: 'POST',
       url: 'https://hmdvu2o3zh.execute-api.us-east-1.amazonaws.com/prod',
@@ -48,7 +54,7 @@ const Main: React.FC = () => {
       .then((url: string) => {
         console.log(url);
         setResult(url);
-        setImageUrl(fields.imageUrl);
+        setLoading(false);
       })
       .catch(console.error);
   };
@@ -71,12 +77,7 @@ const Main: React.FC = () => {
           </Col>
         </Row>
         <Row>
-          <Col>
-            <Image src={imageUrl} fluid={true}/>
-          </Col>
-          <Col>
-            <Image src={result} fluid={true}/>
-          </Col>
+          <ImageDisplay url1={imageUrl} url2={result} loading={loading}/>
         </Row>
         <Row>
           <Form>
