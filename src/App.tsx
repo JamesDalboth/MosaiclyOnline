@@ -3,7 +3,7 @@ import './App.css';
 
 import Main from './Main';
 
-function App(): JSX.Element {
+function App (): JSX.Element {
   return (
     <Main/>
   );

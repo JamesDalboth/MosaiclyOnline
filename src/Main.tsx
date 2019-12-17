@@ -2,12 +2,13 @@ import React from 'react';
 
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
 
+// eslint-disable-next-line
 const request = require('request-promise');
 
 interface FormFields {
-  imageUrl: string,
-  searchTerm: string,
-  tileSize: string
+  imageUrl: string;
+  searchTerm: string;
+  tileSize: string;
 };
 
 type InputChangeEvent = React.FormEvent<any> &
@@ -23,8 +24,8 @@ const Main: React.FC = () => {
     {
       imageUrl: '',
       searchTerm: '',
-      tileSize: ''
-    }
+      tileSize: '',
+    },
   );
 
   const [imageUrl, setImageUrl] = React.useState<string>();
@@ -35,14 +36,14 @@ const Main: React.FC = () => {
       method: 'POST',
       url: 'https://hmdvu2o3zh.execute-api.us-east-1.amazonaws.com/prod',
       body: {
-        "searchTerm": fields.searchTerm,
-        "imageUrl": fields.imageUrl,
-        "tileSize": Number(fields.tileSize)
+        'searchTerm': fields.searchTerm,
+        'imageUrl': fields.imageUrl,
+        'tileSize': Number(fields.tileSize),
       },
       headers: {
-        "Origin": "http://dalboth.com/MosaiclyOnline/"
+        'Origin': 'http://dalboth.com/MosaiclyOnline/',
       },
-      json: true
+      json: true,
     })
       .then((url: string) => {
         console.log(url);
@@ -63,7 +64,7 @@ const Main: React.FC = () => {
 
   return (
     <Container>
-      <Col xs={{ span: 8, offset: 2}}>
+      <Col xs={{ span: 8, offset: 2 }}>
         <Row>
           <Col>
             <h1>Mosaicly Online</h1>
