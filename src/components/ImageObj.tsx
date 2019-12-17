@@ -15,7 +15,7 @@ const ImageObj: React.FC<{ url?: string; loading?: boolean }> = ({ url, loading 
   if (url === undefined) {
     return (
       <Image src={defaultImg} fluid={true} thumbnail/>
-    )
+    );
   }
 
   return (

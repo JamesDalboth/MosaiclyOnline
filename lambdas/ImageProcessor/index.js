@@ -74,9 +74,9 @@ const processSection = async (image, newImage, x, y, tileSize, mapping, colourAd
   const closestImg = mapping[closestColour][0].clone();
 
   if (colourAdjustment) {
-    closestImg.color([{
-      apply: 'mix', params: [ averageHex, 50 ]
-    }]);
+    closestImg.color([
+      { apply: 'mix', params: [ averageHex, 50 ] }
+    ]);
   }
 
   newImage.composite(closestImg, x * tileSize, y * tileSize);

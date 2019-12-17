@@ -13,6 +13,7 @@ const request = require('request-promise');
 interface FormFields {
   searchTerm: string;
   tileSize: string;
+  colourAdjustment: string;
 };
 
 type InputChangeEvent = React.FormEvent<any> &
@@ -28,6 +29,7 @@ const Main: React.FC = () => {
     {
       searchTerm: '',
       tileSize: '',
+      colourAdjustment: '',
     },
   );
   const [imageData, setImageData] = React.useState<string>();
@@ -38,6 +40,8 @@ const Main: React.FC = () => {
     setLoading(true);
     setResult(undefined);
 
+    console.log(fields.colourAdjustment);
+
     request({
       method: 'POST',
       url: 'https://hmdvu2o3zh.execute-api.us-east-1.amazonaws.com/prod',
@@ -45,6 +49,7 @@ const Main: React.FC = () => {
         'searchTerm': fields.searchTerm,
         'data': imageData,
         'tileSize': Number(fields.tileSize),
+        'colourAdjustment': fields.colourAdjustment === 'true',
       },
       headers: {
         'Origin': 'http://dalboth.com/MosaiclyOnline/',
@@ -52,6 +57,7 @@ const Main: React.FC = () => {
       json: true,
     })
       .then((url: string) => {
+        console.log(url);
         setResult(url);
         setLoading(false);
       })
@@ -67,6 +73,12 @@ const Main: React.FC = () => {
 
     const stateUpdate = { fields: fields as Pick<FormFields, keyof FormFields> };
     stateUpdate.fields[key] = val;
+    setFields(stateUpdate.fields);
+  };
+
+  const onCheck = (key: string, val: boolean): void => {
+    const stateUpdate = { fields: fields as Pick<FormFields, keyof FormFields> };
+    (stateUpdate as any).fields[key] = '' + val;
     setFields(stateUpdate.fields);
   };
 
@@ -96,7 +108,7 @@ const Main: React.FC = () => {
       <FileUpload onDrop={onDrop}/>
       <Row>
         <Col xs={{ span: 8, offset: 2 }}>
-          <InputForm onChange={onChange} onSubmit={onSubmit}/>
+          <InputForm onChange={onChange} onSubmit={onSubmit} onCheck={onCheck}/>
         </Col>
       </Row>
       <Row>

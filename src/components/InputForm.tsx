@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 interface FormFields {
   searchTerm: string;
   tileSize: string;
+  colourAdjustment: string;
 };
 
 type InputChangeEvent = React.FormEvent<any> &
@@ -18,9 +19,10 @@ type InputChangeEvent = React.FormEvent<any> &
 interface InputFormProps {
   onChange: (event: InputChangeEvent) => void;
   onSubmit: VoidFunction;
+  onCheck: (key: string, val: boolean) => void;
 }
 
-const InputForm: React.FC<InputFormProps> = ({ onChange, onSubmit }) => {
+const InputForm: React.FC<InputFormProps> = ({ onChange, onSubmit, onCheck }) => {
   return (
     <>
       <Form>
@@ -40,6 +42,15 @@ const InputForm: React.FC<InputFormProps> = ({ onChange, onSubmit }) => {
             type="text"
             onChange={onChange}
             required/>
+        </Form.Group>
+
+        <Form.Group controlId="colourAdjustment">
+          <Form.Check
+            type="checkbox"
+            label="Colour Adjustment Mode"
+            onChange={(event: any) => {
+              onCheck('colourAdjustment', event.target.checked);
+            }}/>
         </Form.Group>
 
         <Button variant="primary" onClick={onSubmit}>
