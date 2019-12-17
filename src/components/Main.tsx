@@ -55,7 +55,7 @@ const Main: React.FC = () => {
         setResult(url);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err);
         setLoading(false);
       });
