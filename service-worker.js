@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/MosaiclyOnline/precache-manifest.9f4259850fd9940b01ebbbdf85cf7533.js"
+  "/MosaiclyOnline/precache-manifest.e823640522f3e1a0be09e7d175f4d040.js"
 );
 
 self.addEventListener('message', (event) => {
