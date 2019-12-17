@@ -89,9 +89,7 @@ const Main: React.FC = () => {
           <hr/>
         </Col>
       </Row>
-      <Row>
-        <ImageDisplay url1={imageData} url2={result} loading={loading}/>
-      </Row>
+      <ImageDisplay url1={imageData} url2={result} loading={loading}/>
       <FileUpload onDrop={onDrop}/>
       <Row>
         <Col xs={{ span: 8, offset: 2 }}>
