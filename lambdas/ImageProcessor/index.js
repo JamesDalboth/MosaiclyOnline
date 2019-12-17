@@ -10,7 +10,8 @@ exports.handler = (event, context, callback) => {
   const details = {
     data: event.data,
     searchTerm: event.searchTerm,
-    tileSize: event.tileSize
+    tileSize: event.tileSize,
+    colourAdjustment: event.colourAdjustment
   };
 
   if (!details.data || !details.searchTerm || !details.tileSize) {
@@ -24,14 +25,14 @@ exports.handler = (event, context, callback) => {
       details.image = image;
     })
     .then(() => invokeSearchScrapper(details.searchTerm, details.tileSize))
-    .then((mapping) => processImage(details.image, details.tileSize, mapping))
+    .then((mapping) => processImage(details.image, details.tileSize, mapping, details.colourAdjustment))
     .then((processedImage) => encodeImage(processedImage))
     .then((base64) => uploadS3(base64))
     .then((url) => callback(null, url))
     .catch((err) => callback(err));
 };
 
-const processImage = async (image, tileSize, mapping) => {
+const processImage = async (image, tileSize, mapping, colourAdjustment) => {
   const imageWidth = image.bitmap.width;
   const imageHeight = image.bitmap.height;
 
@@ -44,7 +45,7 @@ const processImage = async (image, tileSize, mapping) => {
 
   for (let x = 0; x < roundedWidth; x += 1) {
     for (let y = 0; y < roundedHeight; y += 1) {
-      await processSection(image, newImage, x, y, tileSize, mapping);
+      await processSection(image, newImage, x, y, tileSize, mapping, colourAdjustment);
     }
   }
 
@@ -52,7 +53,7 @@ const processImage = async (image, tileSize, mapping) => {
   return newImage;
 };
 
-const processSection = async (image, newImage, x, y, tileSize, mapping) => {
+const processSection = async (image, newImage, x, y, tileSize, mapping, colourAdjustment) => {
   const i = image.getPixelIndex(x, y);
 
   const average = {
@@ -61,9 +62,22 @@ const processSection = async (image, newImage, x, y, tileSize, mapping) => {
     b: image.bitmap.data[i + 2]
   };
 
+  const rHex = average.r.toString(16);
+  const gHex = average.g.toString(16);
+  const bHex = average.b.toString(16);
+
+  const averageHex = '#' + rHex + gHex + bHex;
+  console.log(averageHex);
+
   const closestColour = getClosestColour(average);
 
-  const closestImg = mapping[closestColour][0];
+  const closestImg = mapping[closestColour][0].clone();
+
+  if (colourAdjustment) {
+    closestImg.color([{
+      apply: 'mix', params: [ averageHex, 50 ]
+    }]);
+  }
 
   newImage.composite(closestImg, x * tileSize, y * tileSize);
 };
