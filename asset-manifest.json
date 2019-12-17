@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/MosaiclyOnline/static/css/main.b69c9bc1.chunk.css",
-    "main.js": "/MosaiclyOnline/static/js/main.e276f95a.chunk.js",
-    "main.js.map": "/MosaiclyOnline/static/js/main.e276f95a.chunk.js.map",
+    "main.js": "/MosaiclyOnline/static/js/main.52581b89.chunk.js",
+    "main.js.map": "/MosaiclyOnline/static/js/main.52581b89.chunk.js.map",
     "runtime-main.js": "/MosaiclyOnline/static/js/runtime-main.df034b8b.js",
     "runtime-main.js.map": "/MosaiclyOnline/static/js/runtime-main.df034b8b.js.map",
     "static/js/2.5cbc5c45.chunk.js": "/MosaiclyOnline/static/js/2.5cbc5c45.chunk.js",
     "static/js/2.5cbc5c45.chunk.js.map": "/MosaiclyOnline/static/js/2.5cbc5c45.chunk.js.map",
     "index.html": "/MosaiclyOnline/index.html",
-    "precache-manifest.27697924f2039bf4e45b0c2373143366.js": "/MosaiclyOnline/precache-manifest.27697924f2039bf4e45b0c2373143366.js",
+    "precache-manifest.86d8626f4a2fd77a7a3cb8919a45e644.js": "/MosaiclyOnline/precache-manifest.86d8626f4a2fd77a7a3cb8919a45e644.js",
     "service-worker.js": "/MosaiclyOnline/service-worker.js",
     "static/css/main.b69c9bc1.chunk.css.map": "/MosaiclyOnline/static/css/main.b69c9bc1.chunk.css.map",
     "static/js/2.5cbc5c45.chunk.js.LICENSE": "/MosaiclyOnline/static/js/2.5cbc5c45.chunk.js.LICENSE"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.df034b8b.js",
     "static/js/2.5cbc5c45.chunk.js",
     "static/css/main.b69c9bc1.chunk.css",
-    "static/js/main.e276f95a.chunk.js"
+    "static/js/main.52581b89.chunk.js"
   ]
 }
