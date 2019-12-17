@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/MosaiclyOnline/static/css/main.b69c9bc1.chunk.css",
-    "main.js": "/MosaiclyOnline/static/js/main.a1ad8461.chunk.js",
-    "main.js.map": "/MosaiclyOnline/static/js/main.a1ad8461.chunk.js.map",
+    "main.js": "/MosaiclyOnline/static/js/main.e22d811d.chunk.js",
+    "main.js.map": "/MosaiclyOnline/static/js/main.e22d811d.chunk.js.map",
     "runtime-main.js": "/MosaiclyOnline/static/js/runtime-main.df034b8b.js",
     "runtime-main.js.map": "/MosaiclyOnline/static/js/runtime-main.df034b8b.js.map",
-    "static/js/2.73ff6162.chunk.js": "/MosaiclyOnline/static/js/2.73ff6162.chunk.js",
-    "static/js/2.73ff6162.chunk.js.map": "/MosaiclyOnline/static/js/2.73ff6162.chunk.js.map",
+    "static/js/2.de5bb73c.chunk.js": "/MosaiclyOnline/static/js/2.de5bb73c.chunk.js",
+    "static/js/2.de5bb73c.chunk.js.map": "/MosaiclyOnline/static/js/2.de5bb73c.chunk.js.map",
     "index.html": "/MosaiclyOnline/index.html",
-    "precache-manifest.e823640522f3e1a0be09e7d175f4d040.js": "/MosaiclyOnline/precache-manifest.e823640522f3e1a0be09e7d175f4d040.js",
+    "precache-manifest.dad647fe6bd9c69d6a229a47d8ae9e8e.js": "/MosaiclyOnline/precache-manifest.dad647fe6bd9c69d6a229a47d8ae9e8e.js",
     "service-worker.js": "/MosaiclyOnline/service-worker.js",
     "static/css/main.b69c9bc1.chunk.css.map": "/MosaiclyOnline/static/css/main.b69c9bc1.chunk.css.map",
-    "static/js/2.73ff6162.chunk.js.LICENSE": "/MosaiclyOnline/static/js/2.73ff6162.chunk.js.LICENSE"
+    "static/js/2.de5bb73c.chunk.js.LICENSE": "/MosaiclyOnline/static/js/2.de5bb73c.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.df034b8b.js",
-    "static/js/2.73ff6162.chunk.js",
+    "static/js/2.de5bb73c.chunk.js",
     "static/css/main.b69c9bc1.chunk.css",
-    "static/js/main.a1ad8461.chunk.js"
+    "static/js/main.e22d811d.chunk.js"
   ]
 }
