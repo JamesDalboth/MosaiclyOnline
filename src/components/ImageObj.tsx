@@ -8,7 +8,7 @@ const ImageObj: React.FC<{ url?: string; loading?: boolean; missing: boolean }> 
 
   if (loading) {
     return (
-      <Image src={loadingGif} fluid={true}/>
+      <Image src={loadingGif} fluid={true} thumbnail/>
     );
   }
 
