@@ -43,6 +43,8 @@ const processImage = async (image, tileSize, mapping, colourAdjustment) => {
   newImage.resize(roundedWidth * tileSize, roundedHeight * tileSize);
   image.resize(roundedWidth, roundedHeight, Jimp.RESIZE_NEAREST_NEIGHBOR);
 
+  console.log("Beginning to process image");
+
   for (let x = 0; x < roundedWidth; x += 1) {
     for (let y = 0; y < roundedHeight; y += 1) {
       await processSection(image, newImage, x, y, tileSize, mapping, colourAdjustment);
@@ -67,19 +69,25 @@ const processSection = async (image, newImage, x, y, tileSize, mapping, colourAd
   const bHex = average.b.toString(16);
 
   const averageHex = '#' + rHex + gHex + bHex;
-  console.log(averageHex);
 
   const closestColour = getClosestColour(average);
 
-  const closestImg = mapping[closestColour][0].clone();
+  const closestImg = mapping[closestColour][0];
+
+  if (closestImg == null) {
+    console.error("Failed to get tile for (x, y): " + x + ", " + y);
+    return;
+  }
+
+  const tile = closestImg.clone();
 
   if (colourAdjustment) {
-    closestImg.color([
+    tile.color([
       { apply: 'mix', params: [ averageHex, 50 ] }
     ]);
   }
 
-  newImage.composite(closestImg, x * tileSize, y * tileSize);
+  newImage.composite(tile, x * tileSize, y * tileSize);
 };
 
 const invokeSearchScrapper = async (searchTerm, tileSize) => {
@@ -191,16 +199,20 @@ const getClosestColour = (base) => {
 
 const newImage = async (url, size) => {
   console.log("New Image: " + url);
-  return Jimp.read(url)
+  return Jimp.read({
+      url: url,
+      timeout: 1000
+    })
     .then((image) => image.resize(size, size))
     .then((image) => image.opaque())
     .catch((err) => {
-      console.log("Error loading new image " + url + " : " + err);
+      console.error("Error loading new image " + url + " : " + err);
       return null;
     });
 };
 
 const colourObjUrlReplacement = async (colour, size) => {
+  console.log("Converting urls to images for " + colour.color);
   return Promise.all(colour.data.map((url) => newImage(url, size)))
     .then((data) => data.filter((x) => x != null))
     .then((data) => {
