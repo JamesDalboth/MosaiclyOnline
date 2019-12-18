@@ -35,12 +35,20 @@ const Main: React.FC = () => {
   const [imageData, setImageData] = React.useState<string>();
   const [result, setResult] = React.useState<string>();
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [missingImage, setMissingImage] = React.useState<boolean>(false);
 
-  const onSubmit = (): void => {
+  const onSubmit = (event: React.FormEvent<any>): void => {
+    event.preventDefault();
+
+    if (imageData === undefined) {
+      setMissingImage(true);
+      return;
+    }
+
+    setMissingImage(false);
+
     setLoading(true);
     setResult(undefined);
-
-    console.log(fields.colourAdjustment);
 
     request({
       method: 'POST',
@@ -57,7 +65,6 @@ const Main: React.FC = () => {
       json: true,
     })
       .then((url: string) => {
-        console.log(url);
         setResult(url);
         setLoading(false);
       })
@@ -93,6 +100,7 @@ const Main: React.FC = () => {
     const file = files[0];
     toBase64(file)
       .then((base64: string) => setImageData(base64))
+      .then(() => setMissingImage(false))
       .catch(console.log);
   };
 
@@ -104,7 +112,11 @@ const Main: React.FC = () => {
           <hr/>
         </Col>
       </Row>
-      <ImageDisplay url1={imageData} url2={result} loading={loading}/>
+      <ImageDisplay
+        src1={imageData}
+        src2={result}
+        loading={loading}
+        missingImage={missingImage}/>
       <FileUpload onDrop={onDrop}/>
       <Row>
         <Col xs={{ span: 8, offset: 2 }}>

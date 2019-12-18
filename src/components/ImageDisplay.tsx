@@ -4,17 +4,41 @@ import { Col, Row } from 'react-bootstrap';
 
 import ImageObj from './ImageObj';
 
-const ImageDisplay: React.FC<{ url1?: string; url2?: string; loading: boolean}> = ({ url1, url2, loading }) => {
+interface ImageDisplayProps {
+  src1?: string;
+  src2?: string;
+  loading: boolean;
+  missingImage: boolean;
+}
+
+const ImageDisplay: React.FC<ImageDisplayProps> = ({ src1, src2, loading, missingImage }) => {
+  const getImageObj = (): JSX.Element => {
+    if (missingImage) {
+      return (
+        <>
+          <ImageObj url={src1} missing={true}/>
+          <h5 className="text-center" style={{ color: 'red' }}>
+            Please upload an image!
+          </h5>
+        </>
+      );
+    }
+
+    return (
+      <ImageObj url={src1} missing={false}/>
+    );
+  };
+
   return (
     <Row>
       <Col xs={{ span: 3, offset: 2 }}>
         <h3 className="text-center"> Original </h3>
-        <ImageObj url={url1}/>
+        {getImageObj()}
       </Col>
       <Col xs={{ span: 3, offset: 2 }}>
         <h3 className="text-center"> Mosaiced </h3>
-        <ImageObj url={url2} loading={loading}/>
-        {url2 !== undefined && <a href={url2} download>
+        <ImageObj url={src2} loading={loading} missing={false}/>
+        {src2 !== undefined && <a href={src2} download>
           <h4 className="text-center"> Download </h4>
         </a>}
       </Col>

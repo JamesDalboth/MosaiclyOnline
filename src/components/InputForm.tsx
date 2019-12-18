@@ -18,14 +18,14 @@ type InputChangeEvent = React.FormEvent<any> &
 
 interface InputFormProps {
   onChange: (event: InputChangeEvent) => void;
-  onSubmit: VoidFunction;
+  onSubmit: (event: React.FormEvent<any>) => void;
   onCheck: (key: string, val: boolean) => void;
 }
 
 const InputForm: React.FC<InputFormProps> = ({ onChange, onSubmit, onCheck }) => {
   return (
     <>
-      <Form>
+      <Form onSubmit={onSubmit}>
         <Form.Group controlId="searchTerm">
           <Form.Label>Search Term</Form.Label>
           <Form.Control
@@ -33,6 +33,9 @@ const InputForm: React.FC<InputFormProps> = ({ onChange, onSubmit, onCheck }) =>
             type="text"
             onChange={onChange}
             required/>
+          <Form.Control.Feedback type="valid">
+            Looks Good!.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="tileSize">
@@ -42,18 +45,19 @@ const InputForm: React.FC<InputFormProps> = ({ onChange, onSubmit, onCheck }) =>
             type="text"
             onChange={onChange}
             required/>
+          <Form.Control.Feedback type="valid">
+            Looks Good!.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="colourAdjustment">
           <Form.Check
             type="checkbox"
             label="Colour Adjustment Mode"
-            onChange={(event: any) => {
-              onCheck('colourAdjustment', event.target.checked);
-            }}/>
+            onChange={(event: any) => onCheck('colourAdjustment', event.target.checked)}/>
         </Form.Group>
 
-        <Button variant="primary" onClick={onSubmit}>
+        <Button type="submit" variant="primary">
           Submit
         </Button>
       </Form>
