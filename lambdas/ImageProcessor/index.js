@@ -1,6 +1,34 @@
 const Jimp = require('jimp');
 const AWS = require('aws-sdk');
 
+const request = require('request-promise');
+
+Jimp.appendConstructorOption(
+  'Timeout',
+  options => options.timeoutUrl,
+  function(resolve, reject, options) {
+    request({
+      url: options.timeoutUrl,
+      encoding: null,
+      timeout: 5000
+    })
+      .then((res) => {
+        this.parseBitmap(res, options.timeoutUrl, err => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          }
+
+          resolve();
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        reject(err);
+      });
+  }
+);
+
 const s3 = new AWS.S3();
 const lambda = new AWS.Lambda({
   region: 'us-east-1'
@@ -200,8 +228,7 @@ const getClosestColour = (base) => {
 const newImage = async (url, size) => {
   console.log("New Image: " + url);
   return Jimp.read({
-      url: url,
-      timeout: 1000
+      timeoutUrl: url
     })
     .then((image) => image.resize(size, size))
     .then((image) => image.opaque())
