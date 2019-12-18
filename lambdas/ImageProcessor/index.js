@@ -72,7 +72,7 @@ const processSection = async (image, newImage, x, y, tileSize, mapping, colourAd
 
   const closestColour = getClosestColour(average);
 
-  const closestImg = mapping[closestColour][0];
+  const closestImg = mapping[closestColour][Math.floor(Math.random() * mapping[closestColour].length)];
 
   if (closestImg == null) {
     console.error("Failed to get tile for (x, y): " + x + ", " + y);
